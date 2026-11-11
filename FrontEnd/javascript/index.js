@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const token = sessionStorage.getItem('token');
     if (token) {
-        document.querySelector('.modeEdition').style.display = 'block';
+        document.querySelector('.modeEdition').style.display = 'flex';
         document.querySelector('#login-link').textContent = 'Logout';
     } else {
         document.querySelector('.bandeauEdition').style.display = 'none';
