@@ -384,3 +384,60 @@ footer nav ul {
 	padding: 0.3rem;
 	border-radius: 0.2rem;
 }
+
+.addPhotoFormulaire {
+	display: flex;
+	flex-direction: column;
+}
+
+.addPhotoFormulaire input, .addPhotoFormulaire select {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	background-color: white;
+	width: 100%;
+}
+
+.addPhotoFormulaire label {
+	margin: 2em 0 1em 0;
+	font-weight: bold;
+}
+
+.fileInputContainer {
+	background-color: #E8F1F6 !important;
+	padding: 10px;
+	cursor: pointer;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.fileInputContainer i {
+	color: #B9C5CC;
+	font-size: 6rem;
+	margin-bottom: 1rem;
+}
+
+.fileInputContainer button {
+	z-index: 0;
+	background-color: #CBD6DC;
+	color: #56829A;
+	margin: 0;
+	margin-bottom: 1rem;
+}
+
+.fileInputContainer button i {
+	font-size: 1rem;
+	margin: 0;
+}
+
+.fileInputContainer button input {
+	z-index: 1;
+	opacity: 0;
+	position: absolute;
+	left: 37rem;
+}

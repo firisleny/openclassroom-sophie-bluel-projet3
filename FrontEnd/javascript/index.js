@@ -131,5 +131,78 @@ async function modalEditGallery() {
 
     const addButton = document.createElement('button');
     addButton.textContent = 'Ajouter une photo';
+    addButton.addEventListener('click', modalAddGallery);
+    modalBody.appendChild(addButton);
+}
+
+// Modal d'ajout dans la galerie
+async function modalAddGallery() {
+    const modalBody = document.querySelector('.modal-body');
+    modalBody.innerHTML = '';
+
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Ajout photo';
+    modalBody.appendChild(h3);
+
+    // Formulaire d'ajout
+    const form = document.createElement('form');
+    form.classList.add('addPhotoFormulaire');
+
+    const fileInputContainer = document.createElement("div");
+    fileInputContainer.classList.add("fileInputContainer");
+
+    fileInputContainer.innerHTML = '<i class="fa-regular fa-image"></i>';
+
+    const fileInputButton = document.createElement('button');
+    fileInputButton.innerHTML = '<i class="fa-solid fa-plus"></i> Ajouter photo';
+
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.name = 'image';
+    fileInput.accept = 'image/*';
+    fileInput.classList.add('fileInput');
+    fileInputButton.appendChild(fileInput);
+
+    fileInputContainer.appendChild(fileInputButton);
+
+    const fileDescription = document.createElement('p');
+    fileDescription.textContent = 'jpg, png : 4mo max';
+    fileInputContainer.appendChild(fileDescription);
+
+    modalBody.appendChild(fileInputContainer);
+
+    const titleLabel = document.createElement('label');
+    titleLabel.textContent = 'Titre';
+    form.appendChild(titleLabel);
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.name = 'title';
+    form.appendChild(titleInput);
+
+    const categoryLabel = document.createElement('label');
+    categoryLabel.textContent = 'Catégorie';
+    form.appendChild(categoryLabel);
+
+    const categorySelect = document.createElement('select');
+    categorySelect.name = 'category';
+
+    const categoriesResponse = await fetch('http://localhost:5678/api/categories');
+    const categoriesData = await categoriesResponse.json();
+
+    categoriesData.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
+
+    form.appendChild(categorySelect);
+    modalBody.appendChild(form);
+
+    modalBody.appendChild(document.createElement('span'));
+
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Valider';
     modalBody.appendChild(addButton);
 }
