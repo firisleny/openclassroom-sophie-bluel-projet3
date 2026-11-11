@@ -1,5 +1,15 @@
-// Get works gallery
-getWorksGallery();
+document.addEventListener('DOMContentLoaded', function () {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+        document.querySelector('.modeEdition').style.display = 'block';
+        document.querySelector('#login-link').textContent = 'Logout';
+    } else {
+        document.querySelector('.bandeauEdition').style.display = 'none';
+        document.querySelector('#login-link').textContent = 'Login';
+    }
+    getWorksGallery();
+});
+
 function getWorksGallery() {
     fetch('http://localhost:5678/api/works')
         .then(response => response.json())

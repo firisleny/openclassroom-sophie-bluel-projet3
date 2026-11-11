@@ -216,10 +216,6 @@ footer nav ul {
 	margin:auto;
 }
 
-.modeEdition { /* Cacher quand non connecté */
-	display: block;
-}
-
 .bandeauEdition {
 	display: flex;
 	justify-content: center;
