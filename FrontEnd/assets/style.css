@@ -251,3 +251,8 @@ footer nav ul {
 .navbar{
 	margin-top: 2rem;
 }
+
+.navbar li img {
+	width: 1.3rem;
+	height: 1.3rem;
+}
