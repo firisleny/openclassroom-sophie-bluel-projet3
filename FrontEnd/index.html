@@ -14,8 +14,25 @@
 		<link rel="stylesheet" href="./assets/style.css">
 	</head>
 	<body>
+		<!-- Modal de modification de la galerie -->
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<nav class="modal-navbar">
+					<ul>
+						<li>
+							<a href="javascript:closeModal()">
+								<i  class="fa-solid fa-xmark"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="modal-body">
+					<!-- Contenu du modal chargé dynamiquement -->
+				</div>
+			</div>
+		</div>
 		<!-- Mode édition -->
-		<header class="bandeauEdition modeEdition">
+		<header class="bandeauEdition">
 			<i class="fa-solid fa-pen-to-square"></i>
 			<p>Mode édition</p>
 		</header>
@@ -47,7 +64,7 @@
 			<!-- Projets -->
 			<section id="portfolio">
 				<h2 class="boutonEdition">Mes Projets
-					<a href="#" class="modeEdition">
+					<a href="javascript:openModal()">
 						<i class="fa-solid fa-pen-to-square"></i>
 						modifier
 					</a>

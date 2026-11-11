@@ -288,3 +288,99 @@ footer nav ul {
 	gap: 0.5rem;
 	font-size: 1rem;
 }
+
+/* Style du modal */
+.modal {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+	background-color: white;
+	padding: 2rem;
+	border-radius: 1rem;
+	width: 30rem;
+}
+
+.modal-navbar {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	margin-bottom: 1rem;
+	list-style-type: none;
+}
+
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-body h3 {
+	font-size: 1.5rem;
+	margin-bottom: 3rem;
+}
+
+.modal-body .modal-body-gallery {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.modal-body .modal-body-gallery img {
+	height: 5rem;
+}
+
+.modal-body span {
+	margin-top: 3rem;
+	border: 1px solid rgb(190, 190, 190);
+	width: 80%;
+}
+
+.modal-body button {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
+	padding: 1rem;
+}
+
+.modal-body-gallery span {
+	height: 5rem;
+	width: 4rem;
+	margin: 0;
+}
+
+.delete-button {
+	background-color: transparent;
+	border: none;
+	display: flex;
+	justify-content: right;
+	align-items: top;
+	margin-top: 0.3rem;
+	margin-right: 0.3rem;
+}
+
+.delete-button i {
+	background-color: black;
+	color: white;
+	font-size: 0.5rem;
+	padding: 0.3rem;
+	border-radius: 0.2rem;
+}
