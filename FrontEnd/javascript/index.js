@@ -7,14 +7,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#login-link').addEventListener('click', logout);
         
         document.querySelector('.boutonEdition a').style.display = 'flex';
+
+        document.querySelector('.galleryFiltre').style.display = 'none';
     } else {
         document.querySelector('.bandeauEdition').style.display = 'none';
         document.querySelector('#login-link').textContent = 'login';
 
         document.querySelector('.boutonEdition a').style.display = 'none';
+
+        document.querySelector('.galleryFiltre').style.display = 'flex';
     }
 
-    galleryUpdate();
+    filtreButtonGenerator();
+    galleryUpdate("");
 });
 
 // Déconnexion
@@ -30,24 +35,54 @@ async function getGallery() {
     return data;
 }
 
+// Récupération des catégorie pour crée les bouton de filtre de gallerie
+async function filtreButtonGenerator() {
+    const categoriesResponse = await fetch('http://localhost:5678/api/categories');
+    const categoriesData = await categoriesResponse.json();
+
+    filtreButton = document.createElement('a');
+    filtreButton.textContent = "Tous";
+    filtreButton.id = `buttonFiltre`;
+    filtreButton.href = `javascript:galleryUpdate("")`;
+
+    document.querySelector(".galleryFiltre").appendChild(filtreButton);
+
+    categoriesData.forEach(category => {
+        filtreButton = document.createElement('a');
+        filtreButton.textContent = category.name;
+        filtreButton.id = `buttonFiltre${category.id}`;
+        filtreButton.href= `javascript:galleryUpdate("${category.id}")`;
+
+        document.querySelector(".galleryFiltre").appendChild(filtreButton);
+    });
+}
+
 // Mise à jour de la galerie
-async function galleryUpdate() {
+async function galleryUpdate(filtre) {
     galleryData = await getGallery();
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = '';
 
+    // Gestion de buttonActive pour les filtre
+    for(const child of document.querySelector(".galleryFiltre").children){
+        child.classList.remove("buttonActive");
+    }
+    document.getElementById(`buttonFiltre${filtre}`).classList.add("buttonActive");
+
     galleryData.forEach(work => {
-        const figure = document.createElement('figure');
-        const img = document.createElement('img');
-        img.src = work.imageUrl;
-        img.alt = work.title;
+        if(filtre == "" || filtre == work.categoryId){
+            const figure = document.createElement('figure');
+            const img = document.createElement('img');
+            img.src = work.imageUrl;
+            img.alt = work.title;
 
-        const figcaption = document.createElement('figcaption');
-        figcaption.textContent = work.title;
+            const figcaption = document.createElement('figcaption');
+            figcaption.textContent = work.title;
 
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        gallery.appendChild(figure);
+            figure.appendChild(img);
+            figure.appendChild(figcaption);
+            gallery.appendChild(figure);
+        }
     });
 }
 
@@ -123,7 +158,7 @@ async function modalEditGallery() {
                 });
                 if (response.ok) {
                     span.remove();
-                    galleryUpdate();
+                    galleryUpdate("");
                 } else {
                     console.error('Erreur lors de la suppression dans la galerie');
                 }
@@ -248,7 +283,7 @@ async function modalAddGallery() {
                 getTitleInput.value("");
                 getCategoryInput.value("");
 
-                galleryUpdate();
+                galleryUpdate("");
             } else {
                 console.error('Erreur lors de l\'ajout dans la galerie');
             }
