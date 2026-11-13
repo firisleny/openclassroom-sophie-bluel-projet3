@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const token = sessionStorage.getItem('token');
     if (token) {
         document.querySelector('.bandeauEdition').style.display = 'flex';
-        document.querySelector('#login-link').textContent = 'Logout';
+        document.querySelector('#login-link').textContent = 'logout';
         document.querySelector('#login-link').addEventListener('click', logout);
         
         document.querySelector('.boutonEdition a').style.display = 'flex';
     } else {
         document.querySelector('.bandeauEdition').style.display = 'none';
-        document.querySelector('#login-link').textContent = 'Login';
+        document.querySelector('#login-link').textContent = 'login';
 
         document.querySelector('.boutonEdition a').style.display = 'none';
     }
