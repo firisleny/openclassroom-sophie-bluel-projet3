@@ -85,6 +85,13 @@ window.addEventListener('click', (event) => {
 async function modalEditGallery() {
     var galleryData = await getGallery();
 
+    // Supprésion de bouton retour a l'édition de la gallery car on y est déja
+    returnEditGalleryButton = document.getElementById('returnEditGalleryButton');
+    if(returnEditGalleryButton){
+        returnEditGalleryButton.remove();
+        document.querySelector(".modal-navbar ul").setAttribute('style', "justify-content: end");
+    }
+
     const modalBody = document.querySelector('.modal-body');
     modalBody.innerHTML = '';
 
@@ -118,7 +125,7 @@ async function modalEditGallery() {
                     span.remove();
                     galleryUpdate();
                 } else {
-                    console.error('Erreur lors de la suppression de l\'image');
+                    console.error('Erreur lors de la suppression dans la galerie');
                 }
             }
         });
@@ -140,6 +147,15 @@ async function modalAddGallery() {
     const modalBody = document.querySelector('.modal-body');
     modalBody.innerHTML = '';
 
+    const modalNavbar = document.querySelector('.modal-navbar ul');
+    modalNavbar.insertAdjacentHTML("afterbegin", `<li id="returnEditGalleryButton">
+                                <a href="javascript:modalEditGallery()">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </a>
+                            </li>`);
+    modalNavbar.setAttribute('style', "justify-content: space-between");
+
+
     const h3 = document.createElement('h3');
     h3.textContent = 'Ajout photo';
     modalBody.appendChild(h3);
@@ -159,6 +175,7 @@ async function modalAddGallery() {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.name = 'image';
+    fileInput.id = 'image';
     fileInput.accept = 'image/*';
     fileInput.classList.add('fileInput');
     fileInputButton.appendChild(fileInput);
@@ -178,6 +195,7 @@ async function modalAddGallery() {
     const titleInput = document.createElement('input');
     titleInput.type = 'text';
     titleInput.name = 'title';
+    titleInput.id = 'title';
     form.appendChild(titleInput);
 
     const categoryLabel = document.createElement('label');
@@ -186,6 +204,7 @@ async function modalAddGallery() {
 
     const categorySelect = document.createElement('select');
     categorySelect.name = 'category';
+    categorySelect.id = 'category';
 
     const categoriesResponse = await fetch('http://localhost:5678/api/categories');
     const categoriesData = await categoriesResponse.json();
@@ -205,4 +224,34 @@ async function modalAddGallery() {
     const addButton = document.createElement('button');
     addButton.textContent = 'Valider';
     modalBody.appendChild(addButton);
+
+    addButton.addEventListener('click', async () => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            getFileInput = document.getElementById("image");
+            getTitleInput = document.getElementById("title");
+            getCategoryInput = document.getElementById("category");
+
+            const response = await fetch(`http://localhost:5678/api/works`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    image: getFileInput.files[0].name,
+                    title: getTitleInput.value,
+                    category: getCategoryInput.value
+                })
+            });
+            if (response.ok) {
+                getFileInput.value("");
+                getTitleInput.value("");
+                getCategoryInput.value("");
+
+                galleryUpdate();
+            } else {
+                console.error('Erreur lors de l\'ajout dans la galerie');
+            }
+        }
+    });
 }
